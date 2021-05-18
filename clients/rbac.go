@@ -1,26 +1,25 @@
-package buttressac
+package clients
 
 import (
 	"context"
 
-	buttresserror "github.com/merajsahebdar/buttress-client-go/error"
-	buttressinterceptor "github.com/merajsahebdar/buttress-client-go/interceptor"
+	interceptors "github.com/merajsahebdar/buttress-client-go/internal/interceptors"
 	pb "github.com/merajsahebdar/buttress-implementation-go/rbac"
 	"google.golang.org/grpc"
 )
 
 // RbacAc
 type RbacAc struct {
-	ai     *buttressinterceptor.AuthInterceptor
+	ai     *interceptors.AuthInterceptor
 	ctx    context.Context
 	conn   *grpc.ClientConn
 	client pb.RbacServiceClient
 }
 
-func NewRbacAc(addr string, uuid string, pem []byte) (*RbacAc, *buttresserror.AcError) {
-	ai, err := buttressinterceptor.NewAuthInterceptor(uuid, pem)
+func NewRbacAc(addr string, uuid string, pem []byte) (*RbacAc, *AcError) {
+	ai, err := interceptors.NewAuthInterceptor(uuid, pem)
 	if err != nil {
-		return nil, &buttresserror.AcError{Type: buttresserror.TokenGenerationError, Err: err}
+		return nil, &AcError{Type: TokenGenerationError, Err: err}
 	}
 
 	conn, err := grpc.Dial(
@@ -30,7 +29,7 @@ func NewRbacAc(addr string, uuid string, pem []byte) (*RbacAc, *buttresserror.Ac
 		grpc.WithStreamInterceptor(ai.Stream()),
 	)
 	if err != nil {
-		return nil, &buttresserror.AcError{Type: buttresserror.ConnectionError, Err: err}
+		return nil, &AcError{Type: ConnectionError, Err: err}
 	}
 
 	ctx := context.Background()
@@ -38,7 +37,7 @@ func NewRbacAc(addr string, uuid string, pem []byte) (*RbacAc, *buttresserror.Ac
 
 	_, err = client.CreateRbacInstance(ctx, &pb.EmptyRequest{})
 	if err != nil {
-		return nil, &buttresserror.AcError{Type: buttresserror.InstanceCreationError, Err: err}
+		return nil, &AcError{Type: InstanceCreationError, Err: err}
 	}
 
 	ac := &RbacAc{

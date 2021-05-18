@@ -1,4 +1,4 @@
-package buttressinterceptor
+package interceptors
 
 import (
 	"context"

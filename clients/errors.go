@@ -1,4 +1,4 @@
-package buttresserror
+package clients
 
 // AcErrorType
 type AcErrorType int
