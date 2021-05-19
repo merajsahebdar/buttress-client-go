@@ -78,9 +78,19 @@ func (c *RbacClient) GrantPermissionToSubject(subject string, object string, act
 				Action: action,
 			},
 		})
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
+}
+
+// AddChildSubjectToParentSubject
+func (c *RbacClient) AddChildSubjectToParentSubject(child string, parent string) error {
+	_, err := c.svc.AddChildSubjectToParentSubject(
+		c.ctx,
+		&pb.AddChildSubjectToParentSubjectRequest{
+			Child:  child,
+			Parent: parent,
+		},
+	)
+
+	return err
 }
