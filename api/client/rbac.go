@@ -41,18 +41,16 @@ func NewRbacClient(addr string, uuid string, pem []byte) (*RbacClient, *ClientEr
 		return nil, &ClientError{Type: InstanceCreationError, Err: err}
 	}
 
-	ac := &RbacClient{
+	return &RbacClient{
 		ai:   ai,
 		ctx:  ctx,
 		svc:  svc,
 		conn: conn,
-	}
-
-	return ac, nil
+	}, nil
 }
 
 // HasPermission
-func (c *RbacClient) HasPermission(subject string, object string, action string) (*pb.HasPermissionResponse, error) {
+func (c *RbacClient) HasPermission(subject string, object string, action string) (bool, error) {
 	res, err := c.svc.HasPermission(
 		c.ctx,
 		&pb.HasPermissionRequest{
@@ -63,15 +61,15 @@ func (c *RbacClient) HasPermission(subject string, object string, action string)
 			},
 		})
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 
-	return res, nil
+	return res.Has, nil
 }
 
 // GrantPermissionToSubject
-func (c *RbacClient) GrantPermissionToSubject(subject string, object string, action string) (*pb.EmptyResponse, error) {
-	res, err := c.svc.GrantPermissionToSubject(
+func (c *RbacClient) GrantPermissionToSubject(subject string, object string, action string) error {
+	_, err := c.svc.GrantPermissionToSubject(
 		c.ctx,
 		&pb.GrantPermissionToSubjectRequest{
 			Subject: subject,
@@ -81,8 +79,8 @@ func (c *RbacClient) GrantPermissionToSubject(subject string, object string, act
 			},
 		})
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return res, nil
+	return nil
 }
