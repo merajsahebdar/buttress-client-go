@@ -35,6 +35,10 @@ github.com/merajsahebdar/buttress-implementation-go v0.0.0-20210517161913-be971f
 github.com/merajsahebdar/buttress-implementation-go v0.0.0-20210517161913-be971fdfcec3/go.mod h1:3UD8lBj+/ZEnASTENs/3m0P9a3DhlpjiOCQpzA1opmU=
 github.com/merajsahebdar/buttress-implementation-go v0.1.0 h1:vLOE9SYxrVnpX9UlH+lbIHkEgOX91UNGZNaXmCp6F3g=
 github.com/merajsahebdar/buttress-implementation-go v0.1.0/go.mod h1:3UD8lBj+/ZEnASTENs/3m0P9a3DhlpjiOCQpzA1opmU=
+github.com/merajsahebdar/buttress-implementation-go v0.2.0 h1:rHguOYjGpMnkNT2KlhsXesS3xKOHIwg0STM3ka8oq1U=
+github.com/merajsahebdar/buttress-implementation-go v0.2.0/go.mod h1:3UD8lBj+/ZEnASTENs/3m0P9a3DhlpjiOCQpzA1opmU=
+github.com/merajsahebdar/buttress-implementation-go v0.2.1-0.20210522203620-f414436cc27f h1:kmlk93c2cS9dY/J4rsDYrO1sRxCkqDkKSnRZ5oSzuwY=
+github.com/merajsahebdar/buttress-implementation-go v0.2.1-0.20210522203620-f414436cc27f/go.mod h1:3UD8lBj+/ZEnASTENs/3m0P9a3DhlpjiOCQpzA1opmU=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
