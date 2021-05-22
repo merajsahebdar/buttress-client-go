@@ -68,10 +68,25 @@ func (c *RbacClient) HasPermission(subject string, object string, action string)
 }
 
 // GrantPermissionToSubject
-func (c *RbacClient) GrantPermissionToSubject(subject string, object string, action string) error {
-	_, err := c.svc.GrantPermissionToSubject(
+func (c *RbacClient) GrantPermission(subject string, object string, action string) error {
+	_, err := c.svc.GrantPermission(
 		c.ctx,
-		&pb.GrantPermissionToSubjectRequest{
+		&pb.GrantPermissionRequest{
+			Subject: subject,
+			Permission: &pb.PermissionDefinition{
+				Object: object,
+				Action: action,
+			},
+		})
+
+	return err
+}
+
+// RevokePermission
+func (c *RbacClient) RevokePermission(subject string, object string, action string) error {
+	_, err := c.svc.RevokePermission(
+		c.ctx,
+		&pb.RevokePermissionRequest{
 			Subject: subject,
 			Permission: &pb.PermissionDefinition{
 				Object: object,
@@ -87,6 +102,19 @@ func (c *RbacClient) AddChildSubjectToParentSubject(child string, parent string)
 	_, err := c.svc.AddChildSubjectToParentSubject(
 		c.ctx,
 		&pb.AddChildSubjectToParentSubjectRequest{
+			Child:  child,
+			Parent: parent,
+		},
+	)
+
+	return err
+}
+
+// RemoveChildSubjectFromParentSubject
+func (c *RbacClient) RemoveChildSubjectFromParentSubject(child string, parent string) error {
+	_, err := c.svc.RemoveChildSubjectFromParentSubject(
+		c.ctx,
+		&pb.RemoveChildSubjectFromParentSubjectRequest{
 			Child:  child,
 			Parent: parent,
 		},
