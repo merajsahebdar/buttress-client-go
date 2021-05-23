@@ -61,7 +61,7 @@ func (ai *AuthInterceptor) Stream() grpc.StreamClientInterceptor {
 }
 
 // NewAuthInterceptor
-func NewAuthInterceptor(uuid string, pem []byte) (*AuthInterceptor, error) {
+func NewAuthInterceptor(app string, pem []byte) (*AuthInterceptor, error) {
 	ai := &AuthInterceptor{}
 
 	var err error
@@ -75,7 +75,7 @@ func NewAuthInterceptor(uuid string, pem []byte) (*AuthInterceptor, error) {
 	ai.token, err = ai.signJwt(
 		key,
 		&jwt.StandardClaims{
-			Subject: uuid,
+			Subject: app,
 		},
 	)
 	if err != nil {
