@@ -1,25 +1,12 @@
 package client
 
-// ClientErrorType
-type ClientErrorType int
+import "errors"
 
-const (
-	ConnectionError       ClientErrorType = iota
-	InstanceCreationError ClientErrorType = iota
-	TokenGenerationError  ClientErrorType = iota
-)
+// ErrConnection
+var ErrConnection = errors.New("failed to connect to the buttress server")
 
-// String
-func (e ClientErrorType) String() string {
-	return [...]string{
-		"ConnectionError",
-		"InstanceCreationError",
-		"TokenGenerationError",
-	}[e]
-}
+// ErrAppInstance
+var ErrAppInstance = errors.New("failed to instantiate the buttress application")
 
-// ClientError
-type ClientError struct {
-	Type ClientErrorType
-	Err  error
-}
+// ErrAuthInstance
+var ErrAuthInstance = errors.New("failed to instantiate auth")

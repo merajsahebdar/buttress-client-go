@@ -18,10 +18,10 @@ type RbacClient struct {
 }
 
 // NewAuthorizedRbacClient
-func NewAuthorizedRbacClient(addr string, app string, pem []byte) (*RbacClient, *ClientError) {
+func NewAuthorizedRbacClient(addr string, app string, pem []byte) (*RbacClient, error) {
 	ai, err := auth.NewAuthInterceptor(app, pem)
 	if err != nil {
-		return nil, &ClientError{Type: TokenGenerationError, Err: err}
+		return nil, ErrAuthInstance
 	}
 
 	opts := []grpc.DialOption{
@@ -33,17 +33,17 @@ func NewAuthorizedRbacClient(addr string, app string, pem []byte) (*RbacClient, 
 }
 
 // NewRbacClient
-func NewRbacClient(addr string, app string) (*RbacClient, *ClientError) {
+func NewRbacClient(addr string, app string) (*RbacClient, error) {
 	return newRbacClient(addr, []grpc.DialOption{}, app)
 }
 
 // newRbacClient
-func newRbacClient(addr string, opts []grpc.DialOption, app string) (*RbacClient, *ClientError) {
+func newRbacClient(addr string, opts []grpc.DialOption, app string) (*RbacClient, error) {
 	opts = append(opts, grpc.WithInsecure())
 
 	conn, err := grpc.Dial(addr, opts...)
 	if err != nil {
-		return nil, &ClientError{Type: ConnectionError, Err: err}
+		return nil, ErrConnection
 	}
 
 	md := metadata.New(
@@ -59,7 +59,7 @@ func newRbacClient(addr string, opts []grpc.DialOption, app string) (*RbacClient
 
 	_, err = svc.CreateRbacInstance(ctx, &pb.EmptyRequest{})
 	if err != nil {
-		return nil, &ClientError{Type: InstanceCreationError, Err: err}
+		return nil, ErrAppInstance
 	}
 
 	return &RbacClient{
